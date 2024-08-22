@@ -1,0 +1,2 @@
+New Transformer.56_13666055_UB phases=3 windings=2 buses=(MT1173.1.2.3  BT1306.1.2.3.4) Conns=(Delta wye)  kvs=(13.8 0.38)  kVas=(45 45) Taps=[1.0  1]  %loadloss=0.6207 %noloadloss=0.0037
+New Reactor.TRF_56_13666055_R phases=1 bus1=BT1306.4 Bus2=BT1306.0 R=15.0  X=0 basefreq=60

@@ -1,0 +1,35 @@
+Clear
+Redirect  Barramento.dss
+Redirect  Cabos.dss
+Redirect  CurvaCargaBT.dss
+Redirect  TrafoMTBT.dss
+Redirect  SegmentosBT.dss
+Redirect  CargaBT.dss
+Redirect  CargaIP.dss
+Redirect  PVSystemBT.dss
+MakeBusList
+
+BusCoords Buscoords.csv
+
+!Monitores para o primário do transformador
+New Monitor.MTv element =  Transformer.56_13666055_UB terminal = 1 mode = 0 
+New Monitor.MTp element =  Transformer.56_13666055_UB terminal = 1 mode = 1 ppolar =no
+
+!Monitores para o secundário do transformador
+New Monitor.BTv element =  Transformer.56_13666055_UB terminal = 2 mode = 0
+New Monitor.BTp element =  Transformer.56_13666055_UB terminal = 2 mode = 1 ppolar =no
+
+New Monitor.Subs_v element = Line.MT terminal = 2 mode = 0
+!New Monitor.Subs_p element = Line.MT terminal = 1 mode = 1 ppolar =no
+
+
+Set voltagebases=[13.8 0.38 0.44 ]
+Calcvoltagebases
+
+New Energymeter.carga element=Line.MT terminal=1
+
+set mode=daily
+set tolerance=0.0001
+Set maxcontroliter=10
+Solve
+
