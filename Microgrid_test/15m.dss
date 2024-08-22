@@ -1,0 +1,34 @@
+!primeira tentativa da implementação de um element storage com sistema de inversor baseado no grid forming inverter.
+Compile (master.dss)
+
+!adicionando o storage do circuito.
+New "Storage.mystorage" phases=3 conn=delta bus1=BT1306.1.2.3 kV=0.38 kva=45 kWrated=45 kWhrated=135 %stored=95 %reserve=5 
+~ %EffCharge=90 %EffDischarge=90 %IdlingkW=1 %R=50 %X=0 State=IDLING
+! Grid forming inverter mode requires an InvControl for monitoring the current
+New InvControl.StoCtrl DERList=[Storage.mystorage] mode=GFM !eventlog=yes
+
+! Monitors
+New "Monitor.stomonitor" element=storage.mystorage mode=1 terminal=1 PPolar=no residual=no VIPolar=yes
+New "Monitor.stovi" element=storage.mystorage mode=0 terminal=1
+New "Monitor.stostatevars" element=storage.mystorage mode=3 terminal=1
+
+Set Maxiterations=20 maxcontroliter=30     ! Sometimes the solution takes more than the default 15 iterations
+calcv
+Solve
+set mode=yearly stepsize=15m number=60 ! Simulates first 9 hours
+Solve
+! At 10 AM an event opens a switch for entering into islanded mode
+Open Line.MT terminal=1
+
+!Enables Storage for working as GFM, it is expected for PV to help later
+! The event lasts for 8 hours
+edit storage.mystorage State = Discharging ControlMode = GFM
+set number=32
+Solve
+
+! get back to normal
+edit storage.mystorage State = Charging ControlMode = GFL
+Close Line.MT terminal=1
+set number=4
+solve 
+
