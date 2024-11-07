@@ -15,20 +15,20 @@ New "Monitor.stostatevars" element=storage.mystorage mode=3 terminal=1
 Set Maxiterations=20 maxcontroliter=30     ! Sometimes the solution takes more than the default 15 iterations
 calcv
 Solve
-set mode=daily number=15 ! Simulates first 9 hours
-Solve
+!set mode=daily number=5 ! Simulates first 9 hours
+!Solve
 ! At 10 AM an event opens a switch for entering into islanded mode
-Open Line.MT terminal=1
+!Open Line.MT terminal=1
 
 !Enables Storage for working as GFM, it is expected for PV to help later
 ! The event lasts for 8 hours
-edit storage.mystorage State = Discharging ControlMode = GFM
-set number=8
-Solve
+!edit storage.mystorage State = Discharging ControlMode = GFM
+!set number=9
+!Solve
 
 ! get back to normal
-edit storage.mystorage State = Charging ControlMode = GFL
-Close Line.MT terminal=1
-set number=1
-solve 
+!edit storage.mystorage State = Charging ControlMode = GFL
+!Close Line.MT terminal=1
+!set number=10
+!solve 
 

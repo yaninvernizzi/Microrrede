@@ -9,13 +9,47 @@ New InvControl.StoCtrl DERList=[Storage.mystorage] mode=GFM !eventlog=yes
 
 ! Monitors
 New "Monitor.stomonitor" element=storage.mystorage mode=1 terminal=1 PPolar=no residual=no VIPolar=yes
-New "Monitor.stovi" element=storage.mystorage mode=0 terminal=1
+!New "Monitor.stovi" element=storage.mystorage mode=0 terminal=1
 New "Monitor.stostatevars" element=storage.mystorage mode=3 terminal=1
+New Monitor.MTp element =  Transformer.56_13666055_UB terminal = 2 mode = 1 ppolar =no
+!New "Monitor.stovi" element=load.bt_56_1429581_m2ub mode=0 terminal=1
+
+!Monitorando tensões de todas as cargas de baixa tensão.
+New Monitor.BT_56_1429581_M2UB element=load.BT_56_1429581_M2UB mode=0 terminal=1
+New Monitor.BT_56_2905023_M2UB element=load.BT_56_2905023_M2UB mode=0 terminal=1
+New Monitor.BT_56_2934560_M2UB element=load.BT_56_2934560_M2UB mode=0 terminal=1
+New Monitor.BT_56_2961593_M2UB element=load.BT_56_2961593_M2UB mode=0 terminal=1
+New Monitor.BT_56_2965574_M2UB element=load.BT_56_2965574_M2UB mode=0 terminal=1
+New Monitor.BT_56_3125699_M2UB element=load.BT_56_3125699_M2UB mode=0 terminal=1
+New Monitor.BT_56_313117_M2UB element=load.BT_56_313117_M2UB mode=0 terminal=1
+New Monitor.BT_56_3246036_M2UB element=load.BT_56_3246036_M2UB mode=0 terminal=1
+New Monitor.BT_56_3277108_M2UB element=load.BT_56_3277108_M2UB mode=0 terminal=1
+New Monitor.BT_56_3278650_M2UB element=load.BT_56_3278650_M2UB mode=0 terminal=1
+New Monitor.BT_56_328772_M2UB element=load.BT_56_328772_M2UB mode=0 terminal=1
+New Monitor.BT_56_331226_M2UB element=load.BT_56_331226_M2UB mode=0 terminal=1
+New Monitor.BT_56_3294776_M2UB element=load.BT_56_3294776_M2UB mode=0 terminal=1
+New Monitor.BT_56_432453_M2UB element=load.BT_56_432453_M2UB mode=0 terminal=1
+New Monitor.BT_56_489287_M2UB element=load.BT_56_489287_M2UB mode=0 terminal=1
+New Monitor.BT_56_568742_M2UB element=load.BT_56_568742_M2UB mode=0 terminal=1
+New Monitor.BT_56_572293_M2UB element=load.BT_56_572293_M2UB mode=0 terminal=1
+New Monitor.BT_56_584191_M2UB element=load.BT_56_584191_M2UB mode=0 terminal=1
+New Monitor.BT_56_590278_M2UB element=load.BT_56_590278_M2UB mode=0 terminal=1
+New Monitor.BT_56_730039_M2UB element=load.BT_56_730039_M2UB mode=0 terminal=1
+New Monitor.BT_56_814314_M2UB element=load.BT_56_814314_M2UB mode=0 terminal=1
+New Monitor.BT_56_825803_M2UB element=load.BT_56_825803_M2UB mode=0 terminal=1
+New Monitor.BT_56_855015_M2UB element=load.BT_56_855015_M2UB mode=0 terminal=1
+New Monitor.BT_56_877034_M2UB element=load.BT_56_877034_M2UB mode=0 terminal=1
+New Monitor.BT_56_886314_M2UB element=load.BT_56_886314_M2UB mode=0 terminal=1
+New Monitor.BT_56_904125_M2UB element=load.BT_56_904125_M2UB mode=0 terminal=1
+New Monitor.BT_56_937624_M2UB element=load.BT_56_937624_M2UB mode=0 terminal=1
+New Monitor.BT_56_942436_M2UB element=load.BT_56_942436_M2UB mode=0 terminal=1
+New Monitor.BT_56_960965_M2UB element=load.BT_56_960965_M2UB mode=0 terminal=1
+
 
 Set Maxiterations=20 maxcontroliter=30     ! Sometimes the solution takes more than the default 15 iterations
 calcv
 Solve
-set mode=yearly stepsize=15m number=60 ! Simulates first 9 hours
+set mode=yearly stepsize=15m number=40 ! Simulates first 9 hours
 Solve
 ! At 10 AM an event opens a switch for entering into islanded mode
 Open Line.MT terminal=1
@@ -23,12 +57,12 @@ Open Line.MT terminal=1
 !Enables Storage for working as GFM, it is expected for PV to help later
 ! The event lasts for 8 hours
 edit storage.mystorage State = Discharging ControlMode = GFM
-set number=32
+set number=24
 Solve
 
 ! get back to normal
 edit storage.mystorage State = Charging ControlMode = GFL
 Close Line.MT terminal=1
-set number=4
+set number=32
 solve 
 

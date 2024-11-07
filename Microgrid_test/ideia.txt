@@ -1,0 +1,1 @@
+A ideia é criar um monitor com cada barra e ir adicionando a soma das tensoes no dataframe. Dps só plotar tudo junto.
